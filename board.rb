@@ -6,83 +6,82 @@ require_relative 'queen'
 require_relative 'king' 
 
 class Board 
-	attr_accessor :board, :choice
-	def initialize
-		@board = Array.new(8){Array.new(8," ")}
-		@choice = choice 
-	end 
+  attr_accessor :board, :choice
+  def initialize
+    @board = Array.new(8){Array.new(8," ")}
+    @choice = choice 
+  end 
 
-    def display
-        @board.each do |row|
-          print "\n"
-          @draw = "+----+----+----+----+----+----+----+----+"
-          puts @draw
-          row.each do|column|
-          	if column != " "
-            print "| #{column.piece}  "
-            else  print "| #{column}  "
-            end
-          end
-          print "|"
+  def display
+    @board.each do |row|
+      print "\n"
+      @draw = "+----+----+----+----+----+----+----+----+"
+      puts @draw
+      row.each do|column|
+        if column != " "
+         print "| #{column.piece}  "
+        else  print "| #{column}  "
         end
-        print "\n"
-        print @draw
+      end
+      print "|"
     end
+    print "\n"
+    print @draw
+  end
 
-    def set_board
-    	@board[0][0] = Rook.new([0,0],false)
-    	@board[0][1] = Knight.new([0,1],false)
-    	@board[0][2] = Bishop.new([0,2],false)
-    	@board[0][3] = Queen.new([0,3],false)
-    	@board[0][4] = King.new([0,4],false)
-    	@board[0][5] = Bishop.new([0,5],false)
-    	@board[0][6] = Knight.new([0,6],false)
-    	@board[0][7] = Rook.new([0,7],false)
-    	@board[1][0] = Pawn.new([1,0],false)
-    	@board[1][1] = Pawn.new([1,1],false)
-    	@board[1][2] = Pawn.new([1,2],false)
-    	@board[1][3] = Pawn.new([1,3],false)
-    	@board[1][4] = Pawn.new([1,4],false)
-    	@board[1][5] = Pawn.new([1,5],false)
-    	@board[1][6] = Pawn.new([1,6],false)
-    	@board[1][7] = Pawn.new([1,7],false)
+  def set_board
+    @board[0][0] = Rook.new([0,0],false)
+    @board[0][1] = Knight.new([0,1],false)
+    @board[0][2] = Bishop.new([0,2],false)
+    @board[0][3] = Queen.new([0,3],false)
+    @board[0][4] = King.new([0,4],false)
+    @board[0][5] = Bishop.new([0,5],false)
+    @board[0][6] = Knight.new([0,6],false)
+    @board[0][7] = Rook.new([0,7],false)
+    @board[1][0] = Pawn.new([1,0],false)
+    @board[1][1] = Pawn.new([1,1],false)
+    @board[1][2] = Pawn.new([1,2],false)
+    @board[1][3] = Pawn.new([1,3],false)
+    @board[1][4] = Pawn.new([1,4],false)
+    @board[1][5] = Pawn.new([1,5],false)
+    @board[1][6] = Pawn.new([1,6],false)
+    @board[1][7] = Pawn.new([1,7],false)
 
-    	@board[7][0] = Rook.new([7,0],true)
-    	@board[7][1] = Knight.new([7,1],true)
-    	@board[7][2] = Bishop.new([7,2],true)
-    	@board[7][3] = Queen.new([7,3],true)
-    	@board[7][4] = King.new([7,4],true)
-    	@board[7][5] = Bishop.new([7,5],true)
-    	@board[7][6] = Knight.new([7,6],true)
-    	@board[7][7] = Rook.new([7,7],true)
-    	@board[6][0] = Pawn.new([6,0],true)
-    	@board[6][1] = Pawn.new([6,1],true)
-    	@board[6][2] = Pawn.new([6,2],true)
-    	@board[6][3] = Pawn.new([6,3],true)
-    	@board[6][4] = Pawn.new([6,4],true)
-    	@board[6][5] = Pawn.new([6,5],true)
-    	@board[6][6] = Pawn.new([6,6],true)
-    	@board[6][7] = Pawn.new([6,7],true)
-    end 
+    @board[7][0] = Rook.new([7,0],true)
+    @board[7][1] = Knight.new([7,1],true)
+    @board[7][2] = Bishop.new([7,2],true)
+    @board[7][3] = Queen.new([7,3],true)
+    @board[7][4] = King.new([7,4],true)
+    @board[7][5] = Bishop.new([7,5],true)
+    @board[7][6] = Knight.new([7,6],true)
+    @board[7][7] = Rook.new([7,7],true)
+    @board[6][0] = Pawn.new([6,0],true)
+    @board[6][1] = Pawn.new([6,1],true)
+    @board[6][2] = Pawn.new([6,2],true)
+    @board[6][3] = Pawn.new([6,3],true)
+    @board[6][4] = Pawn.new([6,4],true)
+    @board[6][5] = Pawn.new([6,5],true)
+    @board[6][6] = Pawn.new([6,6],true)
+    @board[6][7] = Pawn.new([6,7],true)
+  end 
 
 
-    def move
-      puts "\n Please choose a piece to move."
-      @choice = gets.chomp
-      puts "\e[H\e[2J"
-      display
-      puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].class}"
-      puts "Possible moves:"
-      @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
-      moved = gets.chomp
-      @board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
-      @board[@choice[0].to_i][@choice[2].to_i] = " "
-      @board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
-      @board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
-    end 
+  def move
+    puts "\n Please choose a piece to move."
+    @choice = gets.chomp
+    puts "\e[H\e[2J"
+    display
+    puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].class}"
+    puts "Possible moves:"
+    @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
+    moved = gets.chomp
+    @board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
+    @board[@choice[0].to_i][@choice[2].to_i] = " "
+    @board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
+    @board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
+  end 
 
 end 
-
 test = Board.new
 test.set_board
 counter = 0

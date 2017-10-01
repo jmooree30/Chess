@@ -14,9 +14,12 @@ counter = 0
 
 until counter > 5
   test.display
-  print "\n#{player1.name} make your move:\n"
-  test.move
-  print "\n#{player1.name} make your move:\n"
-  test.move
+  print "\nWhites move"
+  print "\n#{player1.name} make your move:"
+  test.move("white")
+  test.display
+  print "\nBlacks move"
+  print "\n#{player2.name} make your move:"
+  test.move("black")
   counter +=1
 end

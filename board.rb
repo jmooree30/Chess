@@ -67,11 +67,10 @@ class Board
 
 
   def move
-    puts "\n Please choose a piece to move."
     @choice = gets.chomp
     puts "\e[H\e[2J"
     display
-    puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].class}"
+    puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}"
     puts "Possible moves:"
     @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
     moved = gets.chomp
@@ -82,13 +81,5 @@ class Board
   end 
 
 end 
-test = Board.new
-test.set_board
-counter = 0
 
-until counter > 5
-  test.display
-  test.move
-  counter +=1
-end
 

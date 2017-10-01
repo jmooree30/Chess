@@ -6,9 +6,9 @@ class Bishop
     @piece = boolean ? "♝" : "♗"
     @color = boolean ? "white" : "black"
     @moves = [[+1,-1],
-              [+1,+1],
-              [-1,+1],
-              [-1,-1]]
+    [+1,+1],
+    [-1,+1],
+    [-1,-1]]
   end 
 
   def possible_moves(board)
@@ -33,7 +33,7 @@ class Bishop
         end
       end  
     end 
-      p move_list
+    p move_list
   end 
 
 end

@@ -6,7 +6,7 @@ class Pawn
     @piece = boolean ? "♟" : "♙"
     @color = boolean ? "white" : "black"
     @counter = 0
-	@moves = boolean ?  [[-1,0],[-1,-1],[-1,+1],[-2,0]] : [[+1,0],[+1,+1],[+1,-1],[+2,0]]
+    @moves = boolean ?  [[-1,0],[-1,-1],[-1,+1],[-2,0]] : [[+1,0],[+1,+1],[+1,-1],[+2,0]]
   end 
 
   def possible_moves(board)
@@ -25,18 +25,18 @@ class Pawn
         if x.between?(0,7) and y.between?(0,7)
           if board[x][y] == " "
           elsif board[x][y].color != self.color 
-          move_list << [x,y]
+            move_list << [x,y]
           end
         end 
       end 
       if index == 3
-      	if counter == 0
-      	  if x.between?(0,7) and y.between?(0,7)
-      	    if board[x][y] && board[x-1][y] == " "
-      	      move_list << [x,y] 
-      	    end
-      	  end 
-      	end  
+        if counter == 0
+          if x.between?(0,7) and y.between?(0,7)
+            if board[x][y] && board[x-1][y] == " "
+              move_list << [x,y] 
+            end
+          end 
+        end  
       end 
     end 
     p move_list

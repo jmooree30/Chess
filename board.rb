@@ -82,13 +82,17 @@ class Board
        display
        puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}"
        puts "Possible moves:"
-       @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
+
+       if @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board) == []
+        puts "No possible moves, please try a different piece."
+       elsif
        moved = gets.chomp
        @board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
        @board[@choice[0].to_i][@choice[2].to_i] = " "
        @board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
        @board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i 
        break
+     end 
      end 
    end 
  end 

@@ -3,10 +3,9 @@ require_relative 'players'
 
 print "Player one enter your name:\n"
 player1 = Players.new(gets.chomp)
-#player1.name = gets.chomp
 print "Player two enter your name:\n"
 player2 = Players.new(gets.chomp)
-#player2.name = gets.chomp
+puts "\e[H\e[2J"
 
 test = Board.new
 test.set_board
@@ -17,9 +16,11 @@ until counter > 5
   print "\nWhites move"
   print "\n#{player1.name} select a piece to move:"
   test.move("white")
+  puts "\e[H\e[2J"
   test.display
   print "\nBlacks move"
   print "\n#{player2.name} select a piece to move:"
   test.move("black")
+  puts "\e[H\e[2J"
   counter +=1
 end

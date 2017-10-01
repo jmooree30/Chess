@@ -15,11 +15,11 @@ counter = 0
 until counter > 5
   test.display
   print "\nWhites move"
-  print "\n#{player1.name} make your move:"
+  print "\n#{player1.name} select a piece to move:"
   test.move("white")
   test.display
   print "\nBlacks move"
-  print "\n#{player2.name} make your move:"
+  print "\n#{player2.name} select a piece to move:"
   test.move("black")
   counter +=1
 end

@@ -13,21 +13,25 @@ class Board
 	end 
 
 	def display
-		@board.each do |row|
-			print "\n"
-			@draw = "+----+----+----+----+----+----+----+----+"
-			puts @draw
-			row.each do|column|
-				if column != " "
-					print "| #{column.piece}  "
-				else  print "| #{column}  "
-				end
-			end
-			print "|"
-		end
-		print "\n"
-		print @draw
-	end
+   axis = 0
+   print "   0    1    2    3    4    5    6    7"
+   @board.each do |row|
+     print "\n"
+     @draw = " +----+----+----+----+----+----+----+----+"
+     puts @draw
+     print axis
+     axis +=1
+     row.each do|column|
+       if column != " "
+         print "| #{column.piece}  "
+       else  print "| #{column}  "
+       end
+      end
+      print "|"
+    end
+    print "\n"
+    print @draw
+  end
 
 	def set_board
 		@board[0][0] = Rook.new([0,0],false)
@@ -68,26 +72,26 @@ class Board
 
 	def move(color)
     loop do 
-		@choice = gets.chomp 
-		if @board[choice[0].to_i][choice[2].to_i] == " "
-			p "Invalid move, please try again."
-		elsif @board[choice[0].to_i][choice[2].to_i].color != color
-			p "Invalid move, please try again."
-		elsif @board[choice[0].to_i][choice[2].to_i].color == color
-			puts "\e[H\e[2J"
-			display
-			puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}"
-			puts "Possible moves:"
-			@board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
-			moved = gets.chomp
-			@board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
-			@board[@choice[0].to_i][@choice[2].to_i] = " "
-			@board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
-			@board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i 
-      break
-    end 
-		end 
-	end 
+      @choice = gets.chomp 
+      if @board[choice[0].to_i][choice[2].to_i] == " "
+       p "Invalid move, please try again."
+     elsif @board[choice[0].to_i][choice[2].to_i].color != color
+       p "Invalid move, please try again."
+     elsif @board[choice[0].to_i][choice[2].to_i].color == color
+       puts "\e[H\e[2J"
+       display
+       puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}"
+       puts "Possible moves:"
+       @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
+       moved = gets.chomp
+       @board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
+       @board[@choice[0].to_i][@choice[2].to_i] = " "
+       @board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
+       @board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i 
+       break
+     end 
+   end 
+ end 
 
 end 
 

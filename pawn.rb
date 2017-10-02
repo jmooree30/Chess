@@ -1,11 +1,12 @@
 class Pawn
-  attr_accessor :x_position, :y_position, :piece, :color, :counter, :moves
+  attr_accessor :x_position, :y_position, :piece, :color, :counter, :firstmove, :moves
   def initialize(position,boolean) 
     @x_position = position[0]
     @y_position = position[1]
     @piece = boolean ? "♟" : "♙"
     @color = boolean ? "white" : "black"
     @counter = 0
+    @firstmove = boolean ? +1 : -1
     @moves = boolean ?  [[-1,0],[-1,-1],[-1,+1],[-2,0]] : [[+1,0],[+1,+1],[+1,-1],[+2,0]]
   end 
 
@@ -32,7 +33,7 @@ class Pawn
       if index == 3
         if counter == 0
           if x.between?(0,7) and y.between?(0,7)
-            if board[x][y] && board[x-1][y] == " "
+            if board[x][y] && board[x+@firstmove][y] == " "
               move_list << [x,y] 
             end
           end 

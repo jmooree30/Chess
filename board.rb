@@ -80,7 +80,7 @@ class Board
      elsif @board[choice[0].to_i][choice[2].to_i].color == color
        puts "\e[H\e[2J"
        display
-       puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}"
+       puts "\n#{@board[@choice[0].to_i][@choice[2].to_i].color} #{@board[@choice[0].to_i][@choice[2].to_i].class}: #{@choice}"
        puts "Possible moves:"
 
        if @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board) == []

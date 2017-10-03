@@ -3,7 +3,8 @@ require_relative 'rook'
 require_relative 'bishop'
 require_relative 'knight'
 require_relative 'queen'
-require_relative 'king' 
+require_relative 'king'
+require_relative 'colors' 
 
 class Board 
 	attr_accessor :board, :choice
@@ -12,26 +13,59 @@ class Board
 		@choice = choice 
 	end 
 
+
+
+
+
 	def display
-   axis = 0
-   print "   0    1    2    3    4    5    6    7"
-   @board.each do |row|
-     print "\n"
-     @draw = " +----+----+----+----+----+----+----+----+"
-     puts @draw
-     print axis
-     axis +=1
-     row.each do|column|
-       if column != " "
-         print "| #{column.piece}  "
-       else  print "| #{column}  "
-       end
-      end
-      print "|"
+		axis = 0
+		print "   0    1    2    3    4    5    6    7"
+		@board.each_with_index do |row,index|
+			print "\n"
+			@draw = " +----+----+----+----+----+----+----+----+"
+			puts @draw
+			print axis
+			axis +=1
+			if index.even?
+				row.each_with_index do|column,i|
+					if i.odd?
+						if column != " "
+							print "|"+" #{column.piece}  ".bruno
+						else  print "|"+" #{column}  ".bruno
+						end
+				   else
+					    if column != " "
+						    print "|"+" #{column.piece}  "
+					    else  print "|"+" #{column}  "
+					    end
+					end 
+				end
+		    else
+			    row.each_with_index do|column,j|
+				    if j.even?
+					    if column != " "
+						    print "|"+" #{column.piece}  ".bruno
+					    else  print "|"+" #{column}  ".bruno
+					    end
+			        else   
+				        if column != " "
+					        print "|"+" #{column.piece}  "
+				        else  print "|"+" #{column}  "
+				        end
+			        end
+		        end
+	        end
+	        print "|"
+	    end 
+	    print "\n"
+	    print @draw
     end
-    print "\n"
-    print @draw
-  end
+
+
+
+
+
+
 
 	def set_board
 		@board[0][0] = Rook.new([0,0],false)

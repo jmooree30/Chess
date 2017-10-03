@@ -1,8 +1,9 @@
 require_relative 'board'
 require_relative 'players'
+require_relative 'colors'
 
-puts "Welcome to my CLI version of Chess, instructions on how to play can be found at"
-puts "          https://www.thespruce.com/rules-of-chess-611533"
+puts "Welcome to my CLI version of Chess, instructions on how to play can be found at".bold
+puts "          https://www.thespruce.com/rules-of-chess-611533".bold
 puts "\nEnter moves based on the x and y axis. E.g. 0,6"
 puts"\nPlayer one enter your name:\n"
 player1 = Players.new(gets.chomp)

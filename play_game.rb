@@ -16,14 +16,14 @@ test.set_board
 counter = 0
 
 until counter > 5
+	print "\nWhites move\n"
+	print "#{player1.name}\n"
 	test.display
-	print "\nWhites move"
-	print "\n#{player1.name} select a piece to move:"
 	test.move("white")
 	puts "\e[H\e[2J"
+	print "\nBlacks move\n"
+	print "#{player2.name}\n"
 	test.display
-	print "\nBlacks move"
-	print "\n#{player2.name} select a piece to move:"
 	test.move("black")
 	puts "\e[H\e[2J"
 	counter +=1

@@ -41,7 +41,7 @@ class Pawn
       end 
     end 
     p move_list
-    @counter +=1
+    #@counter +=1
   end 
 
 end

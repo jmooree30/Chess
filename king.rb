@@ -1,10 +1,11 @@
 class King
-  attr_accessor :x_position, :y_position, :piece, :color, :moves
+  attr_accessor :x_position, :y_position, :piece, :color, :counter, :moves
   def initialize(position,boolean) 
     @x_position = position[0]
     @y_position = position[1]
     @piece = boolean ? "♚" : "♔"
     @color = boolean ? "white" : "black"
+    @counter = 0
     @moves = [[+1,0],
     [-1,0],
     [0,+1],
@@ -29,8 +30,29 @@ class King
           move_list << [x,y]
         end 
       end
-    end 
+    end  
     p move_list
   end 
+
+  def castle_ss_option
+    if self.counter == 0
+      if board[7][7].counter == 0 
+        if board[7][6] and board[7][5] == " "
+          return true 
+        end
+      end
+    end
+  end
+
+
+
+  def castle_short_side(board)
+          board[7][5] = board[7][7]
+          board[7][6] = board[7][4]
+          board[7][4] = " "
+          board[7][7] = " "
+  end
+
+
 
 end  

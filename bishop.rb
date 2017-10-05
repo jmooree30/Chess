@@ -1,10 +1,11 @@
 class Bishop
-  attr_accessor :x_position, :y_position, :piece, :color, :moves
+  attr_accessor :x_position, :y_position, :piece, :color, :counter, :moves
   def initialize(position,boolean) 
     @x_position = position[0]
     @y_position = position[1]
     @piece = boolean ? "♝" : "♗"
     @color = boolean ? "white" : "black"
+    @counter = 0
     @moves = [[+1,-1],
     [+1,+1],
     [-1,+1],

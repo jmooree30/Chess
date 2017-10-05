@@ -113,6 +113,8 @@ def check_move(board,choice,moved)
      test == check
     end 
 end 
+
+def get_move(choice,board,)
   
 
 def move(color)

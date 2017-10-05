@@ -100,11 +100,12 @@ def error_message
   puts "Error: Invalid selection."
 end 
 
-def move_info(var)
+def move_info(var,board)
     puts "\e[H\e[2J"
     display
     puts "\n#{@board[var[0].to_i][var[2].to_i].color} #{@board[var[0].to_i][var[2].to_i].class}: #{var}"
     puts "Possible moves:"
+    board[var[0].to_i][var[2].to_i].possible_moves(board)
 end 
 
 def check_move(board,choice,moved)
@@ -114,31 +115,38 @@ def check_move(board,choice,moved)
     end 
 end 
 
-def get_move(choice,board,)
+def swap_pieces(moved,board,choice)
+   board[moved[0].to_i][moved[2].to_i] = board[choice[0].to_i][choice[2].to_i]
+   board[choice[0].to_i][choice[2].to_i] = " "
+   board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
+   board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
+end 
+
+def get_move(board,choice,color)
+	if board[choice[0].to_i][choice[2].to_i] == " "
+		error_message
+	elsif board[choice[0].to_i][choice[2].to_i].color != color
+		error_message
+	elsif board[choice[0].to_i][choice[2].to_i].possible_moves(board) == []
+		print "No possible moves for selected piece."
+	else
+		return true
+	end 
+end 
   
 
 def move(color)
 	loop do 
 		print "\nSelect a piece to move: "
 		@choice = gets.chomp 
-		if @board[choice[0].to_i][choice[2].to_i] == " "
-			error_message
-		elsif @board[choice[0].to_i][choice[2].to_i].color != color
-			error_message
-		elsif @board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board) == []
-			print "No possible moves for selected piece."
-		else
-			move_info(@choice)
-			@board[@choice[0].to_i][@choice[2].to_i].possible_moves(@board)
-			moved = gets.chomp 
-			if check_move(@board,@choice,moved) == true 
-		     @board[moved[0].to_i][moved[2].to_i] = @board[@choice[0].to_i][@choice[2].to_i]
-		     @board[@choice[0].to_i][@choice[2].to_i] = " "
-			  @board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
-	        @board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
-			  break
-			else
-				error_message
+		   if get_move(@board,@choice,color) == true 
+			   move_info(@choice,@board)
+			   moved = gets.chomp 
+			   if check_move(@board,@choice,moved) == true 
+	            swap_pieces(moved,@board,@choice)
+			      break
+			   else
+				   error_message
 		   end
 		end 
 	end 

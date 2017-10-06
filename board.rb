@@ -106,21 +106,10 @@ class Board
 		puts "\n#{@board[var[0].to_i][var[2].to_i].color} #{@board[var[0].to_i][var[2].to_i].class}: #{var}"
 		puts "Possible moves:"
 		board[var[0].to_i][var[2].to_i].possible_moves(board)
-	end 
-
-	def check_move(board,choice,moved)
-		test = [moved[0].to_i, moved[2].to_i]
-		board[choice[0].to_i][choice[2].to_i].possible_moves(board).any? do |check|
-			test == check
+		if castle_ss(@board) == true 
+			puts "castle_short"
 		end 
-	end 
-
-	def swap_pieces(moved,board,choice)
-		board[moved[0].to_i][moved[2].to_i] = board[choice[0].to_i][choice[2].to_i]
-		board[choice[0].to_i][choice[2].to_i] = " "
-		board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
-		board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
-	end 
+	end  
 
 	def get_move(board,choice,color)
 		if board[choice[0].to_i][choice[2].to_i] == " "
@@ -135,6 +124,38 @@ class Board
 	end 
 
 
+	def check_move(board,choice,moved)
+		test = [moved[0].to_i, moved[2].to_i]
+		board[choice[0].to_i][choice[2].to_i].possible_moves(board).any? do |check|
+			test == check
+		end 
+	end 
+
+	def swap_pieces(moved,board,choice)
+		board[moved[0].to_i][moved[2].to_i] = board[choice[0].to_i][choice[2].to_i]
+		board[choice[0].to_i][choice[2].to_i] = " "
+		board[moved[0].to_i][moved[2].to_i].x_position = moved[0].to_i
+		board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
+	end
+
+	def castle_short_side(board)
+          board[7][5] = board[7][7]
+          board[7][6] = board[7][4]
+          board[7][4] = " "
+          board[7][7] = " "
+  end
+
+
+  def castle_ss(board)
+    if board[7][4].counter == 0
+      if board[7][7].counter == 0 
+        if board[7][6] && board[7][5] == " "
+          return true 
+        end
+      end
+    end
+  end
+
 	def move(color)
 		loop do 
 			print "\nSelect a piece to move: "
@@ -142,7 +163,10 @@ class Board
 			if get_move(@board,@choice,color) == true 
 				move_info(@choice,@board)
 				moved = gets.chomp 
-				if check_move(@board,@choice,moved) == true 
+				if moved == "castle_short" && castle_ss(@board) == true  
+					castle_short_side(@board)
+					break
+				elsif check_move(@board,@choice,moved) == true 
 					swap_pieces(moved,@board,@choice)
 					break
 				else

@@ -27,32 +27,12 @@ class King
         if board[x][y] == " "
           move_list << [x,y]
         elsif board[x][y].color != self.color 
-          move_list << [x,y]
+          move_list << [x,y] 
         end 
       end
     end  
     p move_list
   end 
-
-  def castle_ss_option
-    if self.counter == 0
-      if board[7][7].counter == 0 
-        if board[7][6] and board[7][5] == " "
-          return true 
-        end
-      end
-    end
-  end
-
-
-
-  def castle_short_side(board)
-          board[7][5] = board[7][7]
-          board[7][6] = board[7][4]
-          board[7][4] = " "
-          board[7][7] = " "
-  end
-
 
 
 end  

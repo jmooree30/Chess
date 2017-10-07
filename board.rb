@@ -59,12 +59,12 @@ class Board
 
 	def set_board
 		@board[0][0] = Rook.new([0,0],false)
-		@board[0][1] = Knight.new([0,1],false)
-		@board[0][2] = Bishop.new([0,2],false)
-		@board[0][3] = Queen.new([0,3],false)
+		#@board[0][1] = Knight.new([0,1],false)
+		#@board[0][2] = Bishop.new([0,2],false)
+		#@board[0][3] = Queen.new([0,3],false)
 		@board[0][4] = King.new([0,4],false)
-		@board[0][5] = Bishop.new([0,5],false)
-		@board[0][6] = Knight.new([0,6],false)
+		#@board[0][5] = Bishop.new([0,5],false)
+		#@board[0][6] = Knight.new([0,6],false)
 		@board[0][7] = Rook.new([0,7],false)
 		@board[1][0] = Pawn.new([1,0],false)
 		@board[1][1] = Pawn.new([1,1],false)
@@ -76,12 +76,12 @@ class Board
 		@board[1][7] = Pawn.new([1,7],false)
 
 		@board[7][0] = Rook.new([7,0],true)
-		@board[7][1] = Knight.new([7,1],true)
-		@board[7][2] = Bishop.new([7,2],true)
-		@board[7][3] = Queen.new([7,3],true)
+		#@board[7][1] = Knight.new([7,1],true)
+		#@board[7][2] = Bishop.new([7,2],true)
+		#@board[7][3] = Queen.new([7,3],true)
 		@board[7][4] = King.new([7,4],true)
-		@board[7][5] = Bishop.new([7,5],true)
-		@board[7][6] = Knight.new([7,6],true)
+		#@board[7][5] = Bishop.new([7,5],true)
+		#@board[7][6] = Knight.new([7,6],true)
 		@board[7][7] = Rook.new([7,7],true)
 		@board[6][0] = Pawn.new([6,0],true)
 		@board[6][1] = Pawn.new([6,1],true)
@@ -134,82 +134,50 @@ class Board
 		board[moved[0].to_i][moved[2].to_i].y_position = moved[2].to_i
 	end
 
-	def castle_white_ss(choice, moved, board)
-		if choice == "7,4" 
-			if moved == "7,6"
-				if board[7][4].counter == 0
-					if board[7][7].counter == 0 
-						if board[7][6] && board[7][5] == " "
-							board[7][5] = board[7][7]
-							board[7][6] = board[7][4]
-							board[7][4] = " "
-							board[7][7] = " "
-							return true
-						end
-					end
-				end
-			end
-		end
-	end 
-
-	def castle_black_ss(choice, moved, board)
-		if choice == "0,4"
-			if moved == "0,6"
-				if board[0][4].counter == 0
-					if board[0][7].counter == 0
-						if board[0][6] && board[0][5] == " "
-							board[0][5] = board[0][7]
-							board[0][6] = board[0][4]
-							board[0][4] = " "
-							board[0][7] = " "
-							return true
-						end
-					end 
-				end 
-			end 
+	def castle_ss(choice, moved, board, color)
+		if color == "white"
+			x = 7
+		else
+			x = 0 
 		end 
+		if color == "white" && choice == "7,4" && moved == "7,6"
+		elsif color == "black" && choice == "0,4" && moved == "0,6"
+		else
+			return false 
+		end 
+		if board[x][4].counter == 0 && board[x][7].counter == 0
+			if board[x][6] && board[x][5] == " "
+				board[x][5] = board[x][7]
+				board[x][6] = board[x][4]
+				board[x][4] = " "
+				board[x][7] = " "
+				return true
+			end 
+		end
 	end 
 
-	def castle_white_ls(choice, moved, board)
-		if choice == "7,4" 
-			if moved == "7,2"
-				if board[7][4].counter == 0
-					if board[7][0].counter == 0 
-						if board[7][1] && board[7][2] == " "
-							if board[7][3] == " "
-								board[7][3] = board[7][0]
-								board[7][2] = board[7][4]
-								board[7][4] = " "
-								board[7][0] = " "
-								return true 
-							end
-						end 
-					end
-				end
+	def castle_ls(choice, moved, board, color)
+		if color == "white"
+			x = 7
+		else
+			x = 0 
+		end 
+		if color == "white" && choice == "7,4" && moved == "7,2"
+		elsif color == "black" && choice == "0,4" && moved == "0,2"
+		else
+			return false 
+		end 
+		if board[x][4].counter == 0 && board[x][0].counter == 0 
+			if board[x][1] == " " && board[x][2] == " " && board[x][3] == " " 
+				board[x][3] = board[x][0]
+				board[x][2] = board[x][4]
+				board[x][4] = " "
+				board[x][0] = " "
+				return true 
 			end
 		end
 	end 
 
-
-	def castle_black_ls(choice, moved, board)
-		if choice == "0,4" 
-			if moved == "0,2"
-				if board[0][4].counter == 0
-					if board[0][0].counter == 0 
-						if board[0][1] && board[0][2] == " "
-							if board[0][3] == " "
-								board[0][3] = board[0][0]
-								board[0][2] = board[0][4]
-								board[0][4] = " "
-								board[0][0] = " "
-								return true
-							end 
-						end 
-					end
-				end
-			end
-		end
-	end 
 
 	def move(color)
 		loop do 
@@ -218,14 +186,10 @@ class Board
 			if get_move(@board,@choice,color) == true 
 				move_info(@choice,@board)
 				moved = gets.chomp 
-				if castle_black_ls(@choice, moved, @board) == true
+				if castle_ss(@choice, moved, @board, color) == true
 					break 
-				elsif castle_white_ls(@choice, moved, @board) == true
-					break
-				elsif castle_black_ss(@choice, moved, @board) == true
-					break
-				elsif castle_white_ss(@choice, moved, @board) == true 
-					break
+				elsif castle_ls(@choice, moved, @board, color) == true 
+					break 
 				elsif check_move(@board,@choice,moved) == true 
 					swap_pieces(moved,@board,@choice)
 					break

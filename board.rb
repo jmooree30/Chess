@@ -58,7 +58,7 @@ class Board
   end
 
   def set_board
-   # @board[0][0] = Rook.new([0,0],false)
+    @board[0][0] = Rook.new([0,0],false)
     @board[0][1] = Knight.new([0,1],false)
     @board[0][2] = Bishop.new([0,2],false)
     @board[0][3] = Queen.new([0,3],false)
@@ -66,7 +66,7 @@ class Board
     @board[0][5] = Bishop.new([0,5],false)
     @board[0][6] = Knight.new([0,6],false)
     @board[0][7] = Rook.new([0,7],false)
-   # @board[1][0] = Pawn.new([1,0],false)
+    @board[1][0] = Pawn.new([1,0],false)
     @board[1][1] = Pawn.new([1,1],false)
     @board[1][2] = Pawn.new([1,2],false)
     @board[1][3] = Pawn.new([1,3],false)
@@ -83,7 +83,7 @@ class Board
     @board[7][5] = Bishop.new([7,5],true)
     @board[7][6] = Knight.new([7,6],true)
     @board[7][7] = Rook.new([7,7],true)
-    @board[2][0] = Pawn.new([2,0],true) #this one
+    @board[6][0] = Pawn.new([6,0],true) 
     @board[6][1] = Pawn.new([6,1],true)
     @board[6][2] = Pawn.new([6,2],true)
     @board[6][3] = Pawn.new([6,3],true)
@@ -178,7 +178,7 @@ class Board
     end
   end 
 
-  def pawn_promotion(board, color, moved)
+  def white_pawn_promotion(board, color, moved)
     if color == "white" && board[moved[0].to_i][moved[2].to_i].class == Pawn && moved[0].to_i == 0
       puts "\e[H\e[2J"
       display
@@ -203,6 +203,31 @@ class Board
     end 
   end 
 
+    def black_pawn_promotion(board, color, moved)
+    if color == "black" && board[moved[0].to_i][moved[2].to_i].class == Pawn && moved[0].to_i == 7
+      puts "\e[H\e[2J"
+      display
+      puts "\nPromote pawn"
+      puts "Enter: Q = ♕   B = ♗   K = ♔   R = ♖"
+      loop do 
+        promote = gets.chomp
+        if promote == "Q" 
+          board[moved[0].to_i][moved[2].to_i] = Queen.new([moved[0],moved[2]],false)
+          break
+        elsif promote == "B"
+          board[moved[0].to_i][moved[2].to_i] = Bishop.new([moved[0],moved[2]],false)
+          break
+        elsif promote == "K"
+          board[moved[0].to_i][moved[2].to_i] = Knight.new([moved[0],moved[2]],false)
+          break
+        elsif promote == "R"
+          board[moved[0].to_i][moved[2].to_i] = Rook.new([moved[0],moved[2]],false)
+          break
+        end 
+      end 
+    end 
+  end
+
 
   def move(color)
     loop do 
@@ -217,7 +242,8 @@ class Board
           break 
         elsif check_move(@board,@choice,moved) == true 
           swap_pieces(moved,@board,@choice)
-          pawn_promotion(@board, color, moved)
+          white_pawn_promotion(@board, color, moved)
+          black_pawn_promotion(@board, color, moved)
           break
         else
           error_message

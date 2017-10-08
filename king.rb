@@ -31,7 +31,7 @@ class King
         end 
       end
     end  
-    p move_list
+    move_list
   end 
 
 

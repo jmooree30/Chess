@@ -31,7 +31,7 @@ class Knight
           end
         end  
       end 
-      p move_list
+      move_list
     end 
 
   end 

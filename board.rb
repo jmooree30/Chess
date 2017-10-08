@@ -104,7 +104,7 @@ class Board
     puts "\e[H\e[2J"
     display
     puts "\n#{@board[var[0].to_i][var[2].to_i].color} #{@board[var[0].to_i][var[2].to_i].class}: #{var}"
-    print "Move to:"
+    print "Move to: "
   end  
 
   def get_move(board,choice,color)
@@ -228,14 +228,15 @@ class Board
     end 
   end
 
-  def check(board)
-    board.each do |row|
+  def check
+    @board.each do |row|
       row.each do |element|
         if element == " "
-        elsif element.possible_moves(board).each do |move|
-          if board[move[0]][move[1]].class == King 
+          elsif element.possible_moves(@board).each do |move|
+            if @board[move[0]][move[1]].class == King 
             puts "Check"
-            gets.chomp
+            break
+            end 
           end 
         end 
       end 
@@ -244,7 +245,9 @@ class Board
 
   def move(color)
     loop do 
-      print "\nSelect a piece to move: "
+      puts "\n"
+      check
+      print "Select a piece to move: "
       @choice = gets.chomp 
       if get_move(@board,@choice,color) == true 
         move_info(@choice,@board)
@@ -257,7 +260,6 @@ class Board
           swap_pieces(moved,@board,@choice)
           white_pawn_promotion(@board, color, moved)
           black_pawn_promotion(@board, color, moved)
-          check(@board)
           break
         else
           error_message

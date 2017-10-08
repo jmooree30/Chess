@@ -244,11 +244,29 @@ class Board
     end 
   end 
 
+  def check_mate(color) 
+    @board.each do |row|
+      row.each do |element|
+        if element == " "
+        elsif element.color != color 
+          elsif element.possible_moves(@board).each do |move|
+            @board[move[0]][move[1]] = element
+            display
+            if check(color) == true 
+              break
+            end 
+          end
+        end
+      end
+    end   
+  end 
+
   def move(color)    
     loop do 
       puts "\n"
       if check(color) == true 
       puts "Check" 
+      check_mate(color)
       end
       print "Select a piece to move: "
       @choice = gets.chomp 
@@ -256,9 +274,9 @@ class Board
         move_info(@choice,@board)
         moved = gets.chomp 
         if castle_ss(@choice, moved, @board, color) == true
-          break 
+          break if check(color) != true
         elsif castle_ls(@choice, moved, @board, color) == true 
-          break 
+          break if check(color) != true 
         elsif check_move(@board,@choice,moved) == true 
           swap_pieces(moved,@board,@choice)
           white_pawn_promotion(@board, color, moved)

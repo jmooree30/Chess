@@ -250,10 +250,10 @@ class Board
         if element == " "
         elsif element.color != color 
           elsif element.possible_moves(@board).each do |move|
-            @board[move[0]][move[1]] = element
-            display
             if check(color) == true 
-              break
+              @board[move[0]][move[1]] = element 
+              check(color) != true 
+              display 
             end 
           end
         end

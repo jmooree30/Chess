@@ -228,25 +228,28 @@ class Board
     end 
   end
 
-  def check
+  def check(color)
     @board.each do |row|
       row.each do |element|
         if element == " "
+        elsif element.color == color
           elsif element.possible_moves(@board).each do |move|
-            if @board[move[0]][move[1]].class == King 
-            puts "Check"
+            if @board[move[0]][move[1]].class == King  
+            return true 
             break
-            end 
+            end
           end 
         end 
       end 
     end 
   end 
 
-  def move(color)
+  def move(color)    
     loop do 
       puts "\n"
-      check
+      if check(color) == true 
+      puts "Check" 
+      end
       print "Select a piece to move: "
       @choice = gets.chomp 
       if get_move(@board,@choice,color) == true 
@@ -260,7 +263,7 @@ class Board
           swap_pieces(moved,@board,@choice)
           white_pawn_promotion(@board, color, moved)
           black_pawn_promotion(@board, color, moved)
-          break
+          break if check(color) != true 
         else
           error_message
         end

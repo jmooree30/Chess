@@ -13,18 +13,34 @@ puts "\e[H\e[2J"
 
 test = Board.new
 test.set_board
-counter = 0
+counter = 0  
 
-until counter > 5
+until counter > 10000
 	print "Whites move\n"
 	print "#{player1.name}\n"
 	test.display
 	test.move("white")
+	if test.check_mate("white") != true
+	  puts "\e[H\e[2J"
+	  test.display
+      puts "\nYou win!"
+      puts "WOOOOOOOOOOO"
+      puts "CHECK AND MATE!"
+      break
+    end 
 	puts "\e[H\e[2J"
 	print "Blacks move\n"
 	print "#{player2.name}\n"
 	test.display
 	test.move("black")
+	if test.check_mate("black") != true
+	  puts "\e[H\e[2J"
+	  test.display
+      puts "\mYou win!"
+      puts "WOOOOOOOOOOO"
+      puts "CHECK AND MATE!"
+      break
+    end 
 	puts "\e[H\e[2J"
 	counter +=1
 end

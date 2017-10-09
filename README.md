@@ -1,6 +1,6 @@
 # Chess
 
-![Image Hover Text](/ss.png)
+![Image Hover Text](/cc.png)
 
 This was my final project for the Ruby curriculum that I was following from https://www.theodinproject.com/ .
 

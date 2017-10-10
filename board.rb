@@ -67,14 +67,14 @@ class Board
     @board[0][5] = Bishop.new([0,5],false)
     @board[0][6] = Knight.new([0,6],false)
     @board[0][7] = Rook.new([0,7],false)
-    @board[1][0] = Pawn.new([1,0],false)
-    @board[1][1] = Pawn.new([1,1],false)
-    @board[1][2] = Pawn.new([1,2],false)
-    @board[1][3] = Pawn.new([1,3],false)
-    @board[1][4] = Pawn.new([1,4],false)
-    @board[1][5] = Pawn.new([1,5],false)
-    @board[1][6] = Pawn.new([1,6],false)
-    @board[1][7] = Pawn.new([1,7],false)
+   # @board[1][0] = Pawn.new([1,0],false)
+   # @board[1][1] = Pawn.new([1,1],false)
+   # @board[1][2] = Pawn.new([1,2],false)
+   # @board[1][3] = Pawn.new([1,3],false)
+   # @board[1][4] = Pawn.new([1,4],false)
+   # @board[1][5] = Pawn.new([1,5],false)
+   # @board[1][6] = Pawn.new([1,6],false)
+   # @board[1][7] = Pawn.new([1,7],false)
 
     @board[7][0] = Rook.new([7,0],true)
     @board[7][1] = Knight.new([7,1],true)
@@ -84,14 +84,14 @@ class Board
     @board[7][5] = Bishop.new([7,5],true)
     @board[7][6] = Knight.new([7,6],true)
     @board[7][7] = Rook.new([7,7],true)
-    @board[6][0] = Pawn.new([6,0],true) 
-    @board[6][1] = Pawn.new([6,1],true)
-    @board[6][2] = Pawn.new([6,2],true)
-    @board[6][3] = Pawn.new([6,3],true)
-    @board[6][4] = Pawn.new([6,4],true)
-    @board[6][5] = Pawn.new([6,5],true)
-    @board[6][6] = Pawn.new([6,6],true)
-    @board[6][7] = Pawn.new([6,7],true)
+   # @board[6][0] = Pawn.new([6,0],true) 
+   # @board[6][1] = Pawn.new([6,1],true)
+   # @board[6][2] = Pawn.new([6,2],true)
+   # @board[6][3] = Pawn.new([6,3],true)
+   # @board[6][4] = Pawn.new([6,4],true)
+   # @board[6][5] = Pawn.new([6,5],true)
+   # @board[6][6] = Pawn.new([6,6],true)
+   # @board[6][7] = Pawn.new([6,7],true)
   end 
 
   def error_message
@@ -259,6 +259,7 @@ class Board
               if check(color) == true 
                 load_game
               elsif check(color) != true 
+                load_game
                 return true 
                 break
               end
@@ -285,9 +286,6 @@ class Board
   def move(color) 
     loop do 
       puts "\n"
-      if check(color) == true 
-        puts "Check" 
-      end
       print "Type 'save' to save and exit the game.\n"
       print "Select a piece to move: "
       @choice = gets.chomp.reverse 
@@ -302,11 +300,17 @@ class Board
           break if check(color) != true
         elsif castle_ls(@choice, moved, @board, color) == true 
           break if check(color) != true 
-        elsif check_move(@board,@choice,moved) == true 
+        elsif check_move(@board,@choice,moved) == true
+          save_game 
           swap_pieces(moved,@board,@choice)
           white_pawn_promotion(@board, color, moved)
           black_pawn_promotion(@board, color, moved)
-          break if check(color) != true 
+          if check(color) != true
+          break 
+          elsif check(color) == true 
+            load_game 
+            error_message
+          end 
         else
           error_message
         end

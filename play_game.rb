@@ -27,12 +27,12 @@ until counter > 10000
 	print "#{player1.name}\n"
 	test.display
 	test.move("white")
-	if test.check_mate("black") != true
+	  if test.check_mate("black") != true
         puts "\e[H\e[2J"
         test.display
         puts "\nYou win!"
         break
-    end 
+      end 
 	puts "\e[H\e[2J"
 	print "Blacks move\n"
 	print "#{player2.name}\n"

@@ -246,20 +246,23 @@ class Board
   end 
 
   def check_mate(color) 
-    @board.each do |row|
-      row.each do |element|
+    @board.each_with_index do |row,dex|
+      row.each_with_index do |element, index|
         if element == " "
         elsif element.color != color 
           elsif element.possible_moves(@board).each do |move|
             if check(color) == true
               save_game
               @board[move[0]][move[1]] = element
-              element = " "
+              @board[dex][index] = " "
+              display
               if check(color) == true 
                 load_game
               elsif check(color) != true 
-                return true
-              end 
+                return true 
+                break
+              end
+            else return true   
             end 
           end
         end
@@ -283,7 +286,7 @@ class Board
     loop do 
       puts "\n"
       if check(color) == true 
-      puts "Check" 
+        puts "Check" 
       end
       print "Select a piece to move: "
       @choice = gets.chomp 

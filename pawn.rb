@@ -33,7 +33,7 @@ class Pawn
       if index == 3
         if counter == 0
           if x.between?(0,7) and y.between?(0,7)
-            if board[x][y] && board[x+@firstmove][y] == " "
+            if board[x][y] == " " && board[x+@firstmove][y] == " "
               move_list << [x,y] 
             end
           end 

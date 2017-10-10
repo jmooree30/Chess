@@ -72,8 +72,8 @@ class Board
     @board[1][2] = Pawn.new([1,2],false)
     @board[1][3] = Pawn.new([1,3],false)
     @board[1][4] = Pawn.new([1,4],false)
-   # @board[1][5] = Pawn.new([1,5],false)
-    #@board[1][6] = Pawn.new([1,6],false)
+    @board[1][5] = Pawn.new([1,5],false)
+    @board[1][6] = Pawn.new([1,6],false)
     @board[1][7] = Pawn.new([1,7],false)
 
     @board[7][0] = Rook.new([7,0],true)
@@ -88,7 +88,7 @@ class Board
     @board[6][1] = Pawn.new([6,1],true)
     @board[6][2] = Pawn.new([6,2],true)
     @board[6][3] = Pawn.new([6,3],true)
-    #@board[6][4] = Pawn.new([6,4],true)
+    @board[6][4] = Pawn.new([6,4],true)
     @board[6][5] = Pawn.new([6,5],true)
     @board[6][6] = Pawn.new([6,6],true)
     @board[6][7] = Pawn.new([6,7],true)
@@ -104,7 +104,7 @@ class Board
   def move_info(var,board)
     puts "\e[H\e[2J"
     display
-    puts "\n#{@board[var[0].to_i][var[2].to_i].color} #{@board[var[0].to_i][var[2].to_i].class}: #{var}"
+    puts "\n#{@board[var[0].to_i][var[2].to_i].color} #{@board[var[0].to_i][var[2].to_i].class}: #{var.reverse}"
     print "Move to: "
   end  
 
@@ -188,16 +188,16 @@ class Board
       loop do 
         promote = gets.chomp
         if promote == "Q" 
-          board[moved[0].to_i][moved[2].to_i] = Queen.new([moved[0],moved[2]],true)
+          board[moved[0].to_i][moved[2].to_i] = Queen.new([moved[0].to_i,moved[2].to_i],true)
           break
         elsif promote == "B"
-          board[moved[0].to_i][moved[2].to_i] = Bishop.new([moved[0],moved[2]],true)
+          board[moved[0].to_i][moved[2].to_i] = Bishop.new([moved[0].to_i,moved[2].to_i],true)
           break
         elsif promote == "K"
-          board[moved[0].to_i][moved[2].to_i] = Knight.new([moved[0],moved[2]],true)
+          board[moved[0].to_i][moved[2].to_i] = Knight.new([moved[0].to_i,moved[2].to_i],true)
           break
         elsif promote == "R"
-          board[moved[0].to_i][moved[2].to_i] = Rook.new([moved[0],moved[2]],true)
+          board[moved[0].to_i][moved[2].to_i] = Rook.new([moved[0].to_i,moved[2].to_i],true)
           break
         end 
       end 
@@ -213,16 +213,16 @@ class Board
       loop do 
         promote = gets.chomp
         if promote == "Q" 
-          board[moved[0].to_i][moved[2].to_i] = Queen.new([moved[0],moved[2]],false)
+          board[moved[0].to_i][moved[2].to_i] = Queen.new([moved[0].to_i,moved[2].to_i],false)
           break
         elsif promote == "B"
-          board[moved[0].to_i][moved[2].to_i] = Bishop.new([moved[0],moved[2]],false)
+          board[moved[0].to_i][moved[2].to_i] = Bishop.new([moved[0].to_i,moved[2].to_i],false)
           break
         elsif promote == "K"
-          board[moved[0].to_i][moved[2].to_i] = Knight.new([moved[0],moved[2]],false)
+          board[moved[0].to_i][moved[2].to_i] = Knight.new([moved[0].to_i,moved[2].to_i],false)
           break
         elsif promote == "R"
-          board[moved[0].to_i][moved[2].to_i] = Rook.new([moved[0],moved[2]],false)
+          board[moved[0].to_i][moved[2].to_i] = Rook.new([moved[0].to_i,moved[2].to_i],false)
           break
         end 
       end 
@@ -288,11 +288,16 @@ class Board
       if check(color) == true 
         puts "Check" 
       end
+      print "Type 'save' to save and exit the game.\n"
       print "Select a piece to move: "
-      @choice = gets.chomp 
+      @choice = gets.chomp.reverse 
+      if @choice == "evas"
+        save_game
+        exit
+      end 
       if get_move(@board,@choice,color) == true 
         move_info(@choice,@board)
-        moved = gets.chomp 
+        moved = gets.chomp.reverse
         if castle_ss(@choice, moved, @board, color) == true
           break if check(color) != true
         elsif castle_ls(@choice, moved, @board, color) == true 
